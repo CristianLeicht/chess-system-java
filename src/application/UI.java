@@ -10,7 +10,7 @@ public class UI {
 
 			System.out.print((8 - i) + " ");
 
-			for (int j = 0; j < pieces[i].length; j++) {
+			for (int j = 0; j < pieces.length; j++) {
 
 				printPiece(pieces[i][j]);
 			}
