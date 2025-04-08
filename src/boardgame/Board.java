@@ -23,23 +23,51 @@ public class Board {
 		return piece(position.getRow(), position.getColumn());
 	}
 
-	public void placePiece(Piece piece, Position position) {
-		
-		if(thereIsAPiece(position)) {
-			
-			throw new BoardException("There is already a pieace on position "+ position);
+	public Piece piece(int row, int column) {
+		if (!positionExists(row, column)) {
 
-			
+			throw new BoardException("Position not in the board");
+
+		}
+
+		return pieces[row][column];
+	}
+
+	public Piece removePiece(Position position) {
+
+		Piece pieceToRemove = piece(position);
+
+		if (!positionExists(position)) {
+
+			throw new BoardException("Cannot remove piece: position out of bounds");
+
+		}
+
+		if (piece(position) == null) {
+			return null;
+		}
+
+		pieceToRemove.position = null;
+		pieces[position.getRow()][position.getColumn()] = null;
+		return pieceToRemove;
+
+	}
+
+	public void placePiece(Piece piece, Position position) {
+
+		if (thereIsAPiece(position)) {
+
+			throw new BoardException("There is already a pieace on position " + position);
+
 		}
 
 		pieces[position.getRow()][position.getColumn()] = piece;
-
 		piece.position = position;
 	}
 
 	public boolean positionExists(int row, int column) {
 
-		return row >= 0 && row < rows && column >= 0 && row < columns;
+		return row >= 0 && row < rows && column >= 0 && column < columns;
 
 	}
 
@@ -49,24 +77,14 @@ public class Board {
 
 	}
 
-	public boolean thereIsAPiece(Position posision) {
-		
-		if (!positionExists(posision)) {
+	public boolean thereIsAPiece(Position position) {
+
+		if (!positionExists(position)) {
 
 			throw new BoardException("Position not in the board");
 
 		}
-		return piece(posision) != null;
-	}
-
-	public Piece piece(int row, int column) {
-		if (!positionExists(row, column)) {
-
-			throw new BoardException("Position not in the board");
-
-		}
-
-		return pieces[row][column];
+		return piece(position) != null;
 	}
 
 	public int getRows() {
