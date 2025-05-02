@@ -18,7 +18,7 @@ public class Program {
 		ChessMatch chessMatch = new ChessMatch();
 		List<ChessPiece> captured = new ArrayList<ChessPiece>();
 
-		while (true) {
+		while (!chessMatch.getCheckMate()) {
 
 			try {
 				UI.clearScreen();
@@ -39,8 +39,8 @@ public class Program {
 				ChessPosition target = UI.readChessPosition(sc);
 
 				ChessPiece capturedChessPiece = chessMatch.perfomChessMove(source, target);
-				
-				if(capturedChessPiece != null) {
+
+				if (capturedChessPiece != null) {
 					captured.add(capturedChessPiece);
 				}
 
@@ -53,6 +53,9 @@ public class Program {
 			}
 
 		}
+		
+		UI.clearScreen();
+		UI.printMatch(chessMatch, captured);
 
 	}
 
